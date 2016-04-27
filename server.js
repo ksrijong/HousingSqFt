@@ -60,7 +60,9 @@ app.get('/delphidata', function (req, res) {
       res.json(dat.rows);
   });*/
 
-  client.query("SELECT City,AVG(Value) AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_per_sqft_all_homes_norm WHERE Metro='San Diego' AND Year='2013' GROUP BY City ", function(err,dat) {
+  var sd = "'San Diego'";
+
+  client.query('SELECT "City" , AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_all_homes_norm WHERE "Metro" = ' + sd + ' AND "Year" = 2013 GROUP BY "City"', function(err,dat) {
       res.json(dat.rows);
   });
   //return { delphidata: "No data present." }
