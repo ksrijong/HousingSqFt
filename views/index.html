@@ -118,6 +118,8 @@
           });
           d3.layout.cloud = cloud;
           console.log(JSON.stringify(parsed));
+
+          // for colors
           var fill = d3.scale.category20();
 
           d3.layout.cloud().size([800, 300])
@@ -145,8 +147,8 @@
                 .style("fill", function(d, i) { return fill(i); })
                 .attr("text-anchor", "middle")
                 .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
                 .text(function(d) { return d.text; });
           }
 
