@@ -118,7 +118,39 @@
           });
           d3.layout.cloud = cloud;
           console.log(JSON.stringify(parsed));
+          var fill = d3.scale.category20();
+
           d3.layout.cloud().size([800, 300])
+              .words(parsed)
+              .rotate(function(d) { return 0; })
+              .font("Impact")
+              .fontSize(function(d) { return d.size; })
+              .on("end", draw)
+              .start();
+
+          function draw(words) {
+            d3.select("body").append("svg")
+                .attr("width", 1200)
+                .attr("height", 500)
+              .append("g")
+              // without the transform, words words would get cutoff to the left and top, they would
+              // appear outside of the SVG area
+                .attr("transform", "translate(400,200)")
+              .selectAll("text")
+                .data(words)
+                .text(function(d) { return d.word; })
+              .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("font-family", "Impact")
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+                .text(function(d) { return d.text; });
+          }
+
+/*          d3.layout.cloud().size([800, 300])
                   // .words(frequency_list) //d.City??
                   .words(parsed) //d.City??
                   .rotate(0)
@@ -144,7 +176,7 @@
                           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                       })
                       .text(function(d) { return d.text; });
-          }
+          }*/
     });
 
 </script>
