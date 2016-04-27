@@ -44,25 +44,13 @@ app.get('/', function(req, res){
 });
 
 app.get('/delphidata', function (req, res) {
-  // TODO
-  // Connect to the DELPHI Database and return the proper information
-  // that will be displayed on the D3 visualization
-  // Table: Smoking Prevalance in Adults
-  // Task: In the year 2003, retrieve the total number of respondents
-  // for each gender.
-  // Display that data using D3 with gender on the x-axis and
-  // total respondents on the y-axis.
-  /*client.query("SELECT gender, number_of_respondents FROM cogs121_16_raw.cdph_smoking_prevalence_in_adults_1984_2013 WHERE year = 2003 ",function(err,dat){
-      res.json(dat.rows);
-  });*/
-
-  /*client.query("SELECT "City",AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_per_sqft_all_homes_norm WHERE "Metro"='San Diego' AND "Year"='2013' GROUP BY "City" ", function(err,dat) {
-      res.json(dat.rows);
-  });*/
-
   var sd = "'San Diego'";
 
-  client.query('SELECT "City" , AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_all_homes_norm WHERE "Metro" = ' + sd + ' AND "Year" = 2013 GROUP BY "City"', function(err,dat) {
+  // client.query('SELECT "City" , AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_all_homes_norm WHERE "Metro" = ' + sd + ' AND "Year" = 2013 GROUP BY "City"', function(err,dat) {
+  //     res.json(dat.rows);
+  // });
+
+  client.query('SELECT "City" , AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_per_sqft_all_homes_norm WHERE "Metro" = ' + sd + ' AND "Year" = 2013 GROUP BY "City"', function(err,dat) {
       res.json(dat.rows);
   });
   //return { delphidata: "No data present." }
