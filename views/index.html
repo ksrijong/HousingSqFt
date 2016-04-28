@@ -2,6 +2,62 @@
 <div class="chart"></div>-->
 
 <!DOCTYPE html>
+<div class="header">
+	<div class="title">
+		<h1>San Diego Home Values</h1>
+		<hr>
+		<h5>Maximize your profits!</h5>
+	</div>
+	<div class="scroll" align="center">
+		<a href="#body">
+			<span class="glyphicon glyphicon-chevron-down"></span>
+		</a>
+	</div>
+</div>
+
+<div id="body">
+	<div class="title">
+		<h2>See which area of San Diego has the highest value! The larger the text, the more expensive!</h2>
+	</div>
+<!--
+  <div class="options row">
+		<div class="col-md-2"></div>
+		<div class="col-md-2" align="center">
+			<button type="button" class="btn dataBtn" id="totallist" onclick="cloud1();">Total List<br>Price</button>
+		</div>
+		<div class="col-md-2" align="center">
+			<button type="button" class="btn dataBtn" id="listsqft">List Price<br>by<br>Square Foot</button>
+		</div>
+		<div class="col-md-2" align="center">
+			<button type="button" class="btn dataBtn" id="totalsell">Total Sell<br>Price</button>
+		</div>
+		<div class="col-md-2" align="center">
+			<button type="button" class="btn dataBtn" id="sellsqft">Sell Price<br>by<br>Square Foot</button>
+		</div>
+	</div>
+
+	<div class="chart" id="chart"></div>
+-->
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="./js/d3.min.js"></script>
+<script src="./js/index.js"></script>
+
+<script src="js/d3.layout.cloud.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+	$('a').click(function(e) {
+		e.preventDefault();
+		if($($.attr(this, 'href')).length > 0) {
+			$('html, body').animate({
+				scrollTop: $($.attr(this, 'href')).offset().top
+			},400);
+		}
+		return false;
+	});
+</script>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="js/d3.layout.cloud.js"></script>
@@ -46,10 +102,6 @@
                           {"text":"Dulzura","size":10},
                           {"text":"Ranchita","size":120}];
 
-    var color = d3.scale.linear()
-            .domain([0,1,2,3,4,5,6,10,15,20,100])
-            .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
-
     cloud = d3.layout.cloud;
     d3.json("/delphidata", function(err, dat) {
           // console.log("data: " + JSON.stringify(dat));
@@ -70,9 +122,10 @@
           console.log(JSON.stringify(parsed));
 
           // for colors
-          var fill = d3.scale.category20();
+          var fill = d3.scale.category10();
+          var translatewidth = $(window).width()/2;
 
-          d3.layout.cloud().size([800, 300])
+          d3.layout.cloud().size([800, 400])
               .words(parsed)
               .rotate(function(d) { return 0; })
               .font("Impact")
@@ -82,12 +135,12 @@
 
           function draw(words) {
             d3.select("body").append("svg")
-                .attr("width", 1200)
-                .attr("height", 500)
+                .attr("width", $(window).width())
+                .attr("height", 400)
               .append("g")
               // without the transform, words words would get cutoff to the left and top, they would
               // appear outside of the SVG area
-                .attr("transform", "translate(400,200)")
+                .attr("transform", "translate(" + translatewidth + ",200)")
               .selectAll("text")
                 .data(words)
                 .text(function(d) { return d.word; })
@@ -103,59 +156,56 @@
           }
     });
 
-</script>
+    d3.json("/delphidata1", function(err, dat) {
+          // console.log("data: " + JSON.stringify(dat));
+          if (err) {
+              console.log(err);
+              return;
+          }
+          var data = dat;
+          console.log(data);
+          var parsed = data.map(function (obj) {
+            res = {}
+            res.text = obj.City;
+            // res.size = Math.round(obj.avg_value/20000) || 0;
+            res.size = Math.round(obj.avg_value/10) || 0;
+            return res;
+          });
+          d3.layout.cloud = cloud;
+          console.log(JSON.stringify(parsed));
 
+          // for colors
+          var fill = d3.scale.category10();
+          var translatewidth = $(window).width()/2;
 
-<div class="header">
-	<div class="title">
-		<h1>San Diego Home Values</h1>
-		<hr>
-		<h5>Maximize your profits!</h5>
-	</div>
-	<div class="scroll" align="center">
-		<a href="#body">
-			<span class="glyphicon glyphicon-chevron-down"></span>
-		</a>
-	</div>
-</div>
+          d3.layout.cloud().size([800, 400])
+              .words(parsed)
+              .rotate(function(d) { return 0; })
+              .font("Impact")
+              .fontSize(function(d) { return d.size; })
+              .on("end", draw)
+              .start();
 
-<div id="body">
-	<div class="title">
-		<h2>Select an option to see which area of San Diego has the highest value!</h2>
-	</div>
-	<div class="options row">
-		<div class="col-md-2"></div>
-		<div class="col-md-2" align="center">
-			<button type="button" class="btn dataBtn" id="totallist">Total List<br>Price</button>
-		</div>
-		<div class="col-md-2" align="center">
-			<button type="button" class="btn dataBtn" id="listsqft">List Price<br>by<br>Square Foot</button>
-		</div>
-		<div class="col-md-2" align="center">
-			<button type="button" class="btn dataBtn" id="totalsell">Total Sell<br>Price</button>
-		</div>
-		<div class="col-md-2" align="center">
-			<button type="button" class="btn dataBtn" id="sellsqft">Sell Price<br>by<br>Square Foot</button>
-		</div>
-	</div>
-	<div class="chart"></div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="./js/d3.min.js"></script>
-<script src="./js/index.js"></script>
-
-<script src="js/d3.layout.cloud.js"></script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-
-<script>
-	$('a').click(function(e) {
-		e.preventDefault();
-		if($($.attr(this, 'href')).length > 0) {
-			$('html, body').animate({
-				scrollTop: $($.attr(this, 'href')).offset().top
-			},400);
-		}
-		return false;
-	});
+          function draw(words) {
+            d3.select("body").append("svg")
+                .attr("width", $(window).width())
+                .attr("height", 400)
+              .append("g")
+              // without the transform, words words would get cutoff to the left and top, they would
+              // appear outside of the SVG area
+                .attr("transform", "translate(" + translatewidth + ",200)")
+              .selectAll("text")
+                .data(words)
+                .text(function(d) { return d.word; })
+              .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("font-family", "Impact")
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.text; });
+          }
+    });
 </script>
