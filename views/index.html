@@ -1,6 +1,3 @@
-<!--<h1>The Quest for the Best Tacos in San Diego</h1>
-<div class="chart"></div>-->
-
 <!DOCTYPE html>
 <div class="header">
 	<div class="title">
@@ -19,6 +16,9 @@
 	<div class="title">
 		<h2>See which area of San Diego has the highest value! The larger the text, the more expensive!</h2>
 	</div>
+  <div class="listingPrice"> <h3 class="title">Listing Price Per SqFt</h3> </div>
+  <div class="pricePerSqFt"> <h3 class="title">Selling Price Per SqFt</h3> </div>
+
 <!--
   <div class="options row">
 		<div class="col-md-2"></div>
@@ -38,9 +38,64 @@
 
 	<div class="chart" id="chart"></div>
 -->
+  <!-- <div class="container">
+    <ul class="nav nav-pills">
+      <li class="active"><a data-toggle="pill" href="#listingPrice">Listing Price</a></li>
+      <li><a data-toggle="pill" href="#pricePerSqFt">Price Per Sq Ft</a></li>
+      <li><a data-toggle="pill" href="#menu2">Menu 2</a></li>
+      <li><a data-toggle="pill" href="#menu3">Menu 3</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="listingPrice" class="tab-pane fade in active">
+        <h3>Listing Price</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      <div id="pricePerSqFt" class="tab-pane fade">
+        <h3>Price Per Sq Ft</h3>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+      <div id="menu2" class="tab-pane fade">
+        <h3>Menu 2</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+      </div>
+      <div id="menu3" class="tab-pane fade">
+        <h3>Menu 3</h3>
+        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      </div>
+    </div>
+
+    <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+    <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="pill" href="#menu2">Menu 2</a></li>
+    <li><a data-toggle="pill" href="#menu3">Menu 3</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>HOME</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+  </div> -->
+
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="./js/d3.min.js"></script>
 <script src="./js/index.js"></script>
 
@@ -62,48 +117,9 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="js/d3.layout.cloud.js"></script>
 <script>
-    var frequency_list = [{"text":"San Diego","size":40},
-                          {"text":"El Cajon","size":15},
-                          {"text":"Oceanside","size":10},
-                          {"text":"Santee","size":15},
-                          {"text":"Encinitas","size":10},
-                          {"text":"Spring Valley","size":5},
-                          {"text":"Escondido","size":10},
-                          {"text":"San Marcos","size":5},
-                          {"text":"Poway","size":5},
-                          {"text":"Chula Vista","size":85},
-                          {"text":"National City","size":5},
-                          {"text":"Carlsbad","size":5},
-                          {"text":"Lakeside","size":15},
-                          {"text":"Vista","size":45},
-                          {"text":"Ramona","size":30},
-                          {"text":"La Mesa","size":5},
-                          {"text":"Imperial Beach","size":5},
-                          {"text":"Coronado","size":10},
-                          {"text":"Lemon Grove","size":120},
-                          {"text":"Valley Center","size":5},
-                          {"text":"Solana Beach","size":5},
-                          {"text":"Alpine","size":10},
-                          {"text":"Bonita","size":5},
-                          {"text":"Rancho Santa Fe","size":5},
-                          {"text":"Jamul","size":85},
-                          {"text":"Bonsall","size":5},
-                          {"text":"Borrego Springs","size":5},
-                          {"text":"Julian","size":15},
-                          {"text":"Campo","size":45},
-                          {"text":"Pauma Valley","size":30},
-                          {"text":"Descanso","size":5},
-                          {"text":"Warner Springs","size":5},
-                          {"text":"Boulevard","size":10},
-                          {"text":"Mount Laguna","size":120},
-                          {"text":"Santa Ysabel","size":30},
-                          {"text":"Potrero","size":5},
-                          {"text":"Jacumba","size":5},
-                          {"text":"Dulzura","size":10},
-                          {"text":"Ranchita","size":120}];
 
     cloud = d3.layout.cloud;
-    d3.json("/delphidata", function(err, dat) {
+    d3.json("/list2013", function(err, dat) {
           // console.log("data: " + JSON.stringify(dat));
           if (err) {
               console.log(err);
@@ -134,7 +150,7 @@
               .start();
 
           function draw(words) {
-            d3.select("body").append("svg")
+            d3.select(".listingPrice").append("svg")
                 .attr("width", $(window).width())
                 .attr("height", 400)
               .append("g")
@@ -156,7 +172,7 @@
           }
     });
 
-    d3.json("/delphidata1", function(err, dat) {
+    d3.json("/sold2013", function(err, dat) {
           // console.log("data: " + JSON.stringify(dat));
           if (err) {
               console.log(err);
@@ -187,7 +203,7 @@
               .start();
 
           function draw(words) {
-            d3.select("body").append("svg")
+            d3.select(".pricePerSqFt").append("svg")
                 .attr("width", $(window).width())
                 .attr("height", 400)
               .append("g")

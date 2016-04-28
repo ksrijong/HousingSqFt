@@ -43,7 +43,7 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
-app.get('/delphidata', function (req, res) {
+app.get('/list2013', function (req, res) {
   var sd = "'San Diego'";
 
   // client.query('SELECT "City" , AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_all_homes_norm WHERE "Metro" = ' + sd + ' AND "Year" = 2013 GROUP BY "City"', function(err,dat) {
@@ -55,7 +55,7 @@ app.get('/delphidata', function (req, res) {
   });
   //return { delphidata: "No data present." }
 });
-app.get('/delphidata1', function (req, res) {
+app.get('/sold2013', function (req, res) {
   var sd = "'San Diego'";
 
   // client.query('SELECT "City" , AVG("Value") AS avg_value FROM cogs121_16_raw.zillow_zip_median_listing_price_all_homes_norm WHERE "Metro" = ' + sd + ' AND "Year" = 2013 GROUP BY "City"', function(err,dat) {
